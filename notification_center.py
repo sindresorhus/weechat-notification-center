@@ -1,9 +1,5 @@
 # https://github.com/sindresorhus/weechat-notification-center
 # Requires `pip install pync`
-# Author: Sindre Sorhus <sindresorhus@gmail.com>
-# License: MIT
-
-# Modified with option to show/hide notification message
 
 import weechat
 from pync import Notifier
