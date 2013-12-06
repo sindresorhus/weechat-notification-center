@@ -16,6 +16,7 @@ weechat.register(SCRIPT_NAME, SCRIPT_AUTHOR, SCRIPT_VERSION, SCRIPT_LICENSE, SCR
 DEFAULT_OPTIONS = {
 	'show_highlights': 'on',
 	'show_private_message': 'on',
+	'show_message_text': 'on',
 }
 
 for key, val in DEFAULT_OPTIONS.items():
@@ -27,7 +28,13 @@ weechat.hook_print('', 'irc_privmsg', '', 1, 'notify', '')
 def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
 	if weechat.config_get_plugin('show_highlights') == 'on' and highlight == '1':
 		channel = weechat.buffer_get_string(buffer, 'localvar_channel')
-		Notifier.notify(message, title='%s %s' % (prefix, channel))
+		if weechat.config_get_plugin('show_message_text') == 'on':
+			Notifier.notify(message, title='%s %s' % (prefix, channel))
+		else:
+			Notifier.notify('In %s by %s' % (channel, prefix), title='Highlighted Message')
 	elif weechat.config_get_plugin('show_private_message') == 'on' and 'notify_private' in tags:
-		Notifier.notify(message, title='%s [private]' % prefix)
+		if weechat.config_get_plugin('show_message_text') == 'on':
+			Notifier.notify(message, title='%s [private]' % prefix)
+		else:
+			Notifier.notify('From %s' % prefix, title='Private Message')
 	return weechat.WEECHAT_RC_OK
