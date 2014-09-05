@@ -1,6 +1,6 @@
 # WeeChat Notification Center
 
-![screenshot](https://raw.github.com/sindresorhus/weechat-notification-center/master/screenshot.png)
+![](screenshot.png)
 
 > [WeeChat](http://www.weechat.org) script to pass highlights and private messages to the OS X 10.8+ Notification Center.
 
@@ -21,4 +21,4 @@
 
 ## License
 
-[MIT](http://opensource.org/licenses/MIT) © [Sindre Sorhus](http://sindresorhus.com)
+MIT © [Sindre Sorhus](http://sindresorhus.com)
