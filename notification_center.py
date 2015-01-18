@@ -17,7 +17,7 @@ DEFAULT_OPTIONS = {
 	'show_highlights': 'on',
 	'show_private_message': 'on',
 	'show_message_text': 'on',
-        'sound': 'off',
+	'sound': 'off',
 }
 
 for key, val in DEFAULT_OPTIONS.items():
@@ -27,8 +27,8 @@ for key, val in DEFAULT_OPTIONS.items():
 weechat.hook_print('', 'irc_privmsg', '', 1, 'notify', '')
 
 def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
-        # passing `None` or `''` still plays the default sound so we pass a lambda instead to avoid it.
-        sound = 'Pong' if weechat.config_get_plugin('sound') == 'on' else lambda:_
+	# passing `None` or `''` still plays the default sound so we pass a lambda instead
+	sound = 'Pong' if weechat.config_get_plugin('sound') == 'on' else lambda:_
 	if weechat.config_get_plugin('show_highlights') == 'on' and highlight == '1':
 		channel = weechat.buffer_get_string(buffer, 'localvar_channel')
 		if weechat.config_get_plugin('show_message_text') == 'on':
