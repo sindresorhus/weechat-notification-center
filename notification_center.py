@@ -17,6 +17,7 @@ DEFAULT_OPTIONS = {
 	'show_highlights': 'on',
 	'show_private_message': 'on',
 	'show_message_text': 'on',
+        'sound': 'off',
 }
 
 for key, val in DEFAULT_OPTIONS.items():
@@ -26,15 +27,17 @@ for key, val in DEFAULT_OPTIONS.items():
 weechat.hook_print('', 'irc_privmsg', '', 1, 'notify', '')
 
 def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
+        # passing `None` or `''` still plays the default sound so we pass a lambda instead to avoid it.
+        sound = 'Pong' if weechat.config_get_plugin('sound') == 'on' else lambda:_
 	if weechat.config_get_plugin('show_highlights') == 'on' and highlight == '1':
 		channel = weechat.buffer_get_string(buffer, 'localvar_channel')
 		if weechat.config_get_plugin('show_message_text') == 'on':
-			Notifier.notify(message, title='%s %s' % (prefix, channel))
+			Notifier.notify(message, title='%s %s' % (prefix, channel), sound=sound)
 		else:
-			Notifier.notify('In %s by %s' % (channel, prefix), title='Highlighted Message')
+			Notifier.notify('In %s by %s' % (channel, prefix), title='Highlighted Message', sound=sound)
 	elif weechat.config_get_plugin('show_private_message') == 'on' and 'notify_private' in tags:
 		if weechat.config_get_plugin('show_message_text') == 'on':
-			Notifier.notify(message, title='%s [private]' % prefix)
+			Notifier.notify(message, title='%s [private]' % prefix, sound=sound)
 		else:
-			Notifier.notify('From %s' % prefix, title='Private Message')
+			Notifier.notify('From %s' % prefix, title='Private Message', sound=sound)
 	return weechat.WEECHAT_RC_OK
