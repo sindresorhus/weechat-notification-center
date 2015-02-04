@@ -59,8 +59,10 @@ def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
 		else:
 			Notifier.notify('From %s' % prefix, title='Private Message', sound=sound)
 	elif weechat.config_get_plugin('show_other_message') == 'on':
-		Notifier.notify(message, title='By %s in %s' % (prefix, channel), sound=sound_on_other_message)
-
+		if weechat.config_get_plugin('show_message_text') == 'on':
+			Notifier.notify(message, title='By %s in %s' % (prefix, channel), sound=sound_on_other_message)
+		else:
+			Notifier.notify('In %s by %s' % (channel, prefix), title='New Message', sound=sound_on_other_message)
 	return weechat.WEECHAT_RC_OK
   
 weechat.hook_print('', 'irc_privmsg', '', 1, 'notify', '')
