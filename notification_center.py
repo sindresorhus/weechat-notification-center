@@ -32,10 +32,22 @@ for key, val in DEFAULT_OPTIONS.items():
 		weechat.config_set_plugin(key, val)
 
 def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
-	# passing `None` or `''` still plays the default sound so we pass a lambda instead
+
+	#If own nickname is sender, ignore
+	mynick = weechat.buffer_get_string(buffer,'localvar_nick')
+	if prefix == mynick or prefix == ('@%s' % mynick):
+		return weechat.WEECHAT_RC_OK
+
+	#Format message
+	message = repr(message.encode('string-escape'))
+
+	#Passing `None` or `''` still plays the default sound so we pass a lambda instead
 	sound = 'Pong' if weechat.config_get_plugin('sound') == 'on' else lambda:_
 	sound_on_other_message = 'Pong' if weechat.config_get_plugin('sound_on_other_message') == 'on' else lambda:_
+
 	channel = weechat.buffer_get_string(buffer, 'localvar_channel')
+
+	#Send notification
 	if weechat.config_get_plugin('show_highlights') == 'on' and int(highlight):
 		if weechat.config_get_plugin('show_message_text') == 'on':
 			Notifier.notify(message, title='Highlighted by %s in %s' % (prefix, channel), sound=sound)
@@ -48,6 +60,7 @@ def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
 			Notifier.notify('From %s' % prefix, title='Private Message', sound=sound)
 	elif weechat.config_get_plugin('show_other_message') == 'on':
 		Notifier.notify(message, title='By %s in %s' % (prefix, channel), sound=sound_on_other_message)
+
 	return weechat.WEECHAT_RC_OK
   
 weechat.hook_print('', 'irc_privmsg', '', 1, 'notify', '')
