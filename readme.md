@@ -4,6 +4,9 @@
 
 > [WeeChat](http://www.weechat.org) script to pass highlights and private messages to the OS X 10.8+ Notification Center.
 
+Forked and adapted:
+- Option to show all messages
+- Updated titles to be more clear
 
 ## Install
 
