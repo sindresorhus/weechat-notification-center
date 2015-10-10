@@ -18,6 +18,7 @@ DEFAULT_OPTIONS = {
 	'show_private_message': 'on',
 	'show_message_text': 'on',
 	'sound': 'off',
+	'sound_name': 'Pong',
 }
 
 for key, val in DEFAULT_OPTIONS.items():
@@ -33,7 +34,7 @@ def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
 		return weechat.WEECHAT_RC_OK
 
 	# passing `None` or `''` still plays the default sound so we pass a lambda instead
-	sound = 'Pong' if weechat.config_get_plugin('sound') == 'on' else lambda:_
+	sound = weechat.config_get_plugin('sound_name') if weechat.config_get_plugin('sound') == 'on' else lambda:_
 	if weechat.config_get_plugin('show_highlights') == 'on' and int(highlight):
 		channel = weechat.buffer_get_string(buffer, 'localvar_channel')
 		if weechat.config_get_plugin('show_message_text') == 'on':
