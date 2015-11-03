@@ -3,6 +3,7 @@
 
 import weechat
 from pync import Notifier
+import os
 
 
 SCRIPT_NAME = 'notification_center'
@@ -10,7 +11,7 @@ SCRIPT_AUTHOR = 'Sindre Sorhus <sindresorhus@gmail.com>'
 SCRIPT_VERSION = '1.1.0'
 SCRIPT_LICENSE = 'MIT'
 SCRIPT_DESC = 'Pass highlights and private messages to the OS X 10.8+ Notification Center'
-WEECHAT_ICON = '.weechat/weechat.png'
+WEECHAT_ICON = os.path.expanduser('~/.weechat/weechat.png')
 
 weechat.register(SCRIPT_NAME, SCRIPT_AUTHOR, SCRIPT_VERSION, SCRIPT_LICENSE, SCRIPT_DESC, '', '')
 
