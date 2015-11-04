@@ -10,12 +10,14 @@
 ### Script center
 
 - Install [pync](https://github.com/SeTeM/pync): `pip install pync`
+- Copy `weechat.png` from this repository to `~/.weechat/weechat.png`
 - In WeeChat, type `/script` to open the script manager
 - Find `notification_center` and type `i` then `Enter` to install
 
 ### Manually
 
 - Install [pync](https://github.com/SeTeM/pync): `pip install pync`
+- Copy or symlink `weechat.png` to `~/.weechat/weechat.png`
 - Copy or symlink `notification_center.py` into `~/.weechat/python/autoload/`
 
 
