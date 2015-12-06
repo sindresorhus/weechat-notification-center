@@ -50,8 +50,13 @@ Values: `'Basso'`, `'Blow'`, `'Bottle'`, `'Frog'`, `'Funk'`, `'Glass'`, `'Hero'`
 
 ### activate_bundle_id
 
-Default: `com.apple.Terminal`
-Values: `'com.apple.Terminal'`, `'com.googlecode.iterm2'` or any bundle identifier that your terminal uses. The value for your app can be found in `/Applications/<MyTerminal>.app/Contents/Info.plist` right below the `CFBundleIdentifier` key.
+Default: `com.apple.Terminal`  
+Values: `'com.apple.Terminal'`, `'com.googlecode.iterm2'` or any bundle ID that your terminal uses.
+
+App to activate when the notification is clicked.
+
+The app bundle ID can be found in `/Applications/<MyTerminal>.app/Contents/Info.plist`, right below the `CFBundleIdentifier` key.
+
 
 ## License
 
