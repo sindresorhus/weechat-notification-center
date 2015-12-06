@@ -48,6 +48,10 @@ Values: `'on'`, `'off'`
 Default: `'Pong'`  
 Values: `'Basso'`, `'Blow'`, `'Bottle'`, `'Frog'`, `'Funk'`, `'Glass'`, `'Hero'`, `'Morse'`, `'Ping'`, `'Pop'`, `'Purr'`, `'Sosumi'`, `'Submarine'`, `'Tink'`, but can really be anything that has an aptly named sound file in `/System/Library/Sounds/`, `/Library/Sounds/`, or `~/Library/Sounds/`.
 
+### activate_bundle_id
+
+Default: `com.apple.Terminal`
+Values: `'com.apple.Terminal'`, `'com.googlecode.iterm2'` or any bundle identifier that your terminal uses. The value for your app can be found in `/Applications/<MyTerminal>.app/Contents/Info.plist` right below the `CFBundleIdentifier` key.
 
 ## License
 
