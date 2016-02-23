@@ -57,6 +57,19 @@ App to activate when the notification is clicked.
 
 The app bundle ID can be found in `/Applications/<MyTerminal>.app/Contents/Info.plist`, right below the `CFBundleIdentifier` key.
 
+### ignore_old_messages
+
+Default: `'off'`
+Values: `'on'`, `'off'`
+
+Determines whether old messages, such as log playbacks, will trigger notifications or not
+
+### old_message_threshold
+
+Default: `'60'`
+Values: `'1'`, `'2'`, ...
+
+Determines how old a message must be, in seconds, for it to be ignored by `ignore_old_messages`
 
 ## License
 

@@ -23,7 +23,7 @@ DEFAULT_OPTIONS = {
 	'sound': 'off',
 	'sound_name': 'Pong',
 	'activate_bundle_id': 'com.apple.Terminal',
-        'ignore_old_messages': 'off',
+	'ignore_old_messages': 'off',
 	'old_message_threshold': '60'
 }
 
