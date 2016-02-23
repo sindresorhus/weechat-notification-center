@@ -39,8 +39,8 @@ def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
 	if prefix == own_nick or prefix == ('@%s' % own_nick):
 		return weechat.WEECHAT_RC_OK
 
-        # ignore messages older than the configured theshold (such as ZNC logs) if enabled
-        if weechat.config_get_plugin('ignore_old_messages') == 'on':
+	# ignore messages older than the configured theshold (such as ZNC logs) if enabled
+	if weechat.config_get_plugin('ignore_old_messages') == 'on':
 		old_threshold = int(weechat.config_get_plugin('old_message_threshold'))
                 message_time = datetime.datetime.utcfromtimestamp(int(date))
                 now_time = datetime.datetime.utcnow()
