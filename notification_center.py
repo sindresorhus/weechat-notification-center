@@ -24,7 +24,6 @@ DEFAULT_OPTIONS = {
 	'sound_name': 'Pong',
 	'activate_bundle_id': 'com.apple.Terminal',
 	'ignore_old_messages': 'off',
-	'old_message_threshold': '60'
 }
 
 for key, val in DEFAULT_OPTIONS.items():
@@ -41,11 +40,11 @@ def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
 
 	# ignore messages older than the configured theshold (such as ZNC logs) if enabled
 	if weechat.config_get_plugin('ignore_old_messages') == 'on':
-		old_threshold = int(weechat.config_get_plugin('old_message_threshold'))
                 message_time = datetime.datetime.utcfromtimestamp(int(date))
                 now_time = datetime.datetime.utcnow()
 
-                if (now_time - message_time).seconds > old_threshold:
+		# ignore if the message is greater than 5 seconds old
+                if (now_time - message_time).seconds > 5:
                         return weechat.WEECHAT_RC_OK
 
 	# passing `None` or `''` still plays the default sound so we pass a lambda instead
