@@ -2,6 +2,7 @@
 # Requires `pip install pync`
 
 import os
+import datetime
 import weechat
 from pync import Notifier
 
@@ -22,6 +23,7 @@ DEFAULT_OPTIONS = {
 	'sound': 'off',
 	'sound_name': 'Pong',
 	'activate_bundle_id': 'com.apple.Terminal',
+	'ignore_old_messages': 'off',
 }
 
 for key, val in DEFAULT_OPTIONS.items():
@@ -35,6 +37,15 @@ def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
 	own_nick = weechat.buffer_get_string(buffer, 'localvar_nick')
 	if prefix == own_nick or prefix == ('@%s' % own_nick):
 		return weechat.WEECHAT_RC_OK
+
+	# ignore messages older than the configured theshold (such as ZNC logs) if enabled
+	if weechat.config_get_plugin('ignore_old_messages') == 'on':
+                message_time = datetime.datetime.utcfromtimestamp(int(date))
+                now_time = datetime.datetime.utcnow()
+
+		# ignore if the message is greater than 5 seconds old
+                if (now_time - message_time).seconds > 5:
+                        return weechat.WEECHAT_RC_OK
 
 	# passing `None` or `''` still plays the default sound so we pass a lambda instead
 	sound = weechat.config_get_plugin('sound_name') if weechat.config_get_plugin('sound') == 'on' else lambda:_
