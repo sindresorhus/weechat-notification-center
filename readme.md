@@ -2,7 +2,7 @@
 
 ![](screenshot.png)
 
-> [WeeChat](https://weechat.org) script to pass highlights and private messages to the OS X Notification Center
+> [WeeChat](https://weechat.org) script to pass highlights and private messages to the macOS Notification Center
 
 
 ## Install
