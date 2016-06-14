@@ -25,32 +25,32 @@
 
 ### show_highlights
 
-Default: `'on'`  
+Default: `'on'`<br>
 Values: `'on'`, `'off'`
 
 ### show_private_message
 
-Default: `'on'`  
+Default: `'on'`<br>
 Values: `'on'`, `'off'`
 
 ### show_message_text
 
-Default: `'on'`  
+Default: `'on'`<br>
 Values: `'on'`, `'off'`
 
 ### sound
 
-Default: `'off'`  
+Default: `'off'`<br>
 Values: `'on'`, `'off'`
 
 ### sound_name
 
-Default: `'Pong'`  
+Default: `'Pong'`<br>
 Values: `'Basso'`, `'Blow'`, `'Bottle'`, `'Frog'`, `'Funk'`, `'Glass'`, `'Hero'`, `'Morse'`, `'Ping'`, `'Pop'`, `'Purr'`, `'Sosumi'`, `'Submarine'`, `'Tink'`, but can really be anything that has an aptly named sound file in `/System/Library/Sounds/`, `/Library/Sounds/`, or `~/Library/Sounds/`.
 
 ### activate_bundle_id
 
-Default: `com.apple.Terminal`  
+Default: `com.apple.Terminal`<br>
 Values: `'com.apple.Terminal'`, `'com.googlecode.iterm2'` or any bundle ID that your terminal uses.
 
 App to activate when the notification is clicked.
@@ -64,6 +64,7 @@ Values: `'on'`, `'off'`
 
 Determines whether old messages, such as log playbacks, will trigger notifications or not.
 
+
 ## License
 
-MIT © [Sindre Sorhus](http://sindresorhus.com)
+MIT © [Sindre Sorhus](https://sindresorhus.com)
