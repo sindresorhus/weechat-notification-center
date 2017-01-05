@@ -24,6 +24,7 @@ DEFAULT_OPTIONS = {
 	'sound_name': 'Pong',
 	'activate_bundle_id': 'com.apple.Terminal',
 	'ignore_old_messages': 'off',
+        'ignore_current_buffer': 'off',
 }
 
 for key, val in DEFAULT_OPTIONS.items():
@@ -37,6 +38,10 @@ def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
 	own_nick = weechat.buffer_get_string(buffer, 'localvar_nick')
 	if prefix == own_nick or prefix == ('@%s' % own_nick):
 		return weechat.WEECHAT_RC_OK
+
+        # ignore if current buffer
+        if weechat.config_get_plugin('ignore_current_buffer') == 'on' and buffer == weechat.current_buffer():
+                return weechat.WEECHAT_RC_OK
 
 	# ignore messages older than the configured theshold (such as ZNC logs) if enabled
 	if weechat.config_get_plugin('ignore_old_messages') == 'on':
