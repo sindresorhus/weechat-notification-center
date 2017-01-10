@@ -20,6 +20,7 @@ DEFAULT_OPTIONS = {
 	'show_highlights': 'on',
 	'show_private_message': 'on',
 	'show_message_text': 'on',
+	'show_notify': 'off',
 	'sound': 'off',
 	'sound_name': 'Pong',
 	'activate_bundle_id': 'com.apple.Terminal',
@@ -31,7 +32,7 @@ for key, val in DEFAULT_OPTIONS.items():
 	if not weechat.config_is_set_plugin(key):
 		weechat.config_set_plugin(key, val)
 
-weechat.hook_print('', 'irc_privmsg', '', 1, 'notify', '')
+weechat.hook_print('', 'irc_privmsg,irc_notify', '', 1, 'notify', '')
 
 def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
 	# ignore if it's yourself
@@ -66,4 +67,6 @@ def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
 			Notifier.notify(message, title='%s [private]' % prefix, sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
 		else:
 			Notifier.notify('From %s' % prefix, title='Private Message', sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
+	elif weechat.config_get_plugin('show_notify') == 'on' and 'irc_notify' in tags:
+                Notifier.notify(message, title='notify', sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
 	return weechat.WEECHAT_RC_OK
