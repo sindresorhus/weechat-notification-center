@@ -21,6 +21,8 @@ DEFAULT_OPTIONS = {
 	'show_private_message': 'on',
 	'show_message_text': 'on',
 	'show_notify': 'off',
+	'show_watch': 'off',
+	'watch_msg_nick_arg': '0',
 	'sound': 'off',
 	'sound_name': 'Pong',
 	'activate_bundle_id': 'com.apple.Terminal',
@@ -35,6 +37,7 @@ for key, val in DEFAULT_OPTIONS.items():
 		weechat.config_set_plugin(key, val)
 
 weechat.hook_print('', 'irc_privmsg,irc_notify', '', 1, 'notify', '')
+weechat.hook_print('', 'irc_600,irc_601', '', 1, 'watch', '')
 
 def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
 	# ignore if it's yourself
@@ -55,10 +58,6 @@ def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
 		if (now_time - message_time).seconds > 5:
 			return weechat.WEECHAT_RC_OK
 
-	# passing `None` or `''` still plays the default sound so we pass a lambda instead
-	sound = weechat.config_get_plugin('sound_name') if weechat.config_get_plugin('sound') == 'on' else lambda:_
-	activate_bundle_id = weechat.config_get_plugin('activate_bundle_id')
-
         # ignore sender matching prefix (e.g. '*' to ignore ZNC *status)
 	ignore = weechat.config_get_plugin('ignore_prefix')
         if ignore != '' and prefix.startswith(ignore):
@@ -68,6 +67,10 @@ def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
 	ignore = weechat.config_get_plugin('ignore_nicks')
         if prefix in ignore.split(','):
                 return weechat.WEECHAT_RC_OK
+
+	# passing `None` or `''` still plays the default sound so we pass a lambda instead
+	sound = weechat.config_get_plugin('sound_name') if weechat.config_get_plugin('sound') == 'on' else lambda:_
+	activate_bundle_id = weechat.config_get_plugin('activate_bundle_id')
 
 	if weechat.config_get_plugin('show_highlights') == 'on' and int(highlight):
 		channel = weechat.buffer_get_string(buffer, 'localvar_channel')
@@ -82,4 +85,18 @@ def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
 			Notifier.notify('From %s' % prefix, title='Private Message', sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
 	elif weechat.config_get_plugin('show_notify') == 'on' and 'irc_notify' in tags:
                 Notifier.notify(message, title='notify', sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
+	return weechat.WEECHAT_RC_OK
+
+def watch(data, buffer, date, tags, displayed, highlight, prefix, message):
+	# passing `None` or `''` still plays the default sound so we pass a lambda instead
+	sound = weechat.config_get_plugin('sound_name') if weechat.config_get_plugin('sound') == 'on' else lambda:_
+	activate_bundle_id = weechat.config_get_plugin('activate_bundle_id')
+
+	if weechat.config_get_plugin('show_watch') == 'on':
+                nick = message.split()[ int( weechat.config_get_plugin('watch_msg_nick_arg') ) ]
+                server = weechat.buffer_get_string(buffer, 'localvar_server')
+                if 'irc_600' in tags:
+                        Notifier.notify('%s signed on' % nick, title='%s: watch' % server, sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
+                if 'irc_601' in tags:
+                        Notifier.notify('%s signed off' % nick, title='%s: watch' % server, sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
 	return weechat.WEECHAT_RC_OK
