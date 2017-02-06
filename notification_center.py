@@ -23,6 +23,7 @@ DEFAULT_OPTIONS = {
 	'show_notify': 'off',
 	'show_watch': 'off',
 	'watch_msg_nick_arg': '0',
+	'watch_away': 'off',
 	'sound': 'off',
 	'sound_name': 'Pong',
 	'activate_bundle_id': 'com.apple.Terminal',
@@ -37,7 +38,7 @@ for key, val in DEFAULT_OPTIONS.items():
 		weechat.config_set_plugin(key, val)
 
 weechat.hook_print('', 'irc_privmsg,irc_notify', '', 1, 'notify', '')
-weechat.hook_print('', 'irc_600,irc_601', '', 1, 'watch', '')
+weechat.hook_print('', 'irc_600,irc_601,irc_598,irc_599', '', 1, 'watch', '')
 
 def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
 	# ignore if it's yourself
@@ -99,4 +100,9 @@ def watch(data, buffer, date, tags, displayed, highlight, prefix, message):
                         Notifier.notify('%s signed on' % nick, title='%s: watch' % server, sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
                 if 'irc_601' in tags:
                         Notifier.notify('%s signed off' % nick, title='%s: watch' % server, sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
+                if weechat.config_get_plugin('watch_away') == 'on':
+                        if 'irc_598' in tags:
+                                Notifier.notify('%s is away' % nick, title='%s: watch' % server, sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
+                        if 'irc_599' in tags:
+                                Notifier.notify('%s is no longer away' % nick, title='%s: watch' % server, sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
 	return weechat.WEECHAT_RC_OK
