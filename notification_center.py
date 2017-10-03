@@ -50,15 +50,18 @@ def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
 	# passing `None` or `''` still plays the default sound so we pass a lambda instead
 	sound = weechat.config_get_plugin('sound_name') if weechat.config_get_plugin('sound') == 'on' else lambda:_
 	activate_bundle_id = weechat.config_get_plugin('activate_bundle_id')
+        group_prefix = 'weechat.nc'
 	if weechat.config_get_plugin('show_highlights') == 'on' and int(highlight):
 		channel = weechat.buffer_get_string(buffer, 'localvar_channel')
+		group_id = '%s.%s' % (group_prefix, channel)
 		if weechat.config_get_plugin('show_message_text') == 'on':
-			Notifier.notify(message, title='%s %s' % (prefix, channel), sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
+			Notifier.notify(message, title='%s %s' % (prefix, channel), group=group_id, sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
 		else:
-			Notifier.notify('In %s by %s' % (channel, prefix), title='Highlighted Message', sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
+			Notifier.notify('In %s by %s' % (channel, prefix), title='Highlighted Message', group=group_id, sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
 	elif weechat.config_get_plugin('show_private_message') == 'on' and 'notify_private' in tags:
+		group_id = '%s.%s' % (group_prefix, prefix)
 		if weechat.config_get_plugin('show_message_text') == 'on':
-			Notifier.notify(message, title='%s [private]' % prefix, sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
+			Notifier.notify(message, title='%s [private]' % prefix, group=group_id, sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
 		else:
-			Notifier.notify('From %s' % prefix, title='Private Message', sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
+			Notifier.notify('From %s' % prefix, title='Private Message', group=group_id, sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
 	return weechat.WEECHAT_RC_OK
