@@ -30,7 +30,7 @@ for key, val in DEFAULT_OPTIONS.items():
 	if not weechat.config_is_set_plugin(key):
 		weechat.config_set_plugin(key, val)
 
-weechat.hook_print('', 'irc_privmsg', '', 1, 'notify', '')
+weechat.hook_print('', ', '', 1, 'notify', '')
 
 def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
 	# ignore if it's yourself
