@@ -59,7 +59,7 @@ The app bundle ID can be found in `/Applications/<MyTerminal>.app/Contents/Info.
 
 ### ignore_old_messages
 
-Default: `'off'`
+Default: `'off'`<br>
 Values: `'on'`, `'off'`
 
 Determines whether old messages, such as log playbacks, will trigger notifications or not.
