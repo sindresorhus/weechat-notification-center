@@ -39,7 +39,7 @@ def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
 	if prefix == own_nick or prefix == ('@%s' % own_nick):
 		return weechat.WEECHAT_RC_OK
 
-	# ignore messages from current buffer
+	# ignore messages from the current buffer
 	if weechat.config_get_plugin('ignore_current_buffer_messages') == 'on' and buffer == weechat.current_buffer():
 		return weechat.WEECHAT_RC_OK
 
