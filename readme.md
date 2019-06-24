@@ -64,6 +64,12 @@ Values: `'on'`, `'off'`
 
 Determines whether old messages, such as log playbacks, will trigger notifications or not.
 
+### ignore_current_buffer_messages
+
+Default: `'off'`<br>
+Values: `'on'`, `'off'`
+
+Determines whether messages from the current buffer should trigger notifications or not. This is especially useful if you use [wee-slack](https://github.com/wee-slack/wee-slack) and receive notifications for messages they send, as discussed in [#22](https://github.com/sindresorhus/weechat-notification-center/issues/22).
 
 ## License
 
