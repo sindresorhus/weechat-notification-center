@@ -25,6 +25,7 @@ DEFAULT_OPTIONS = {
 	'activate_bundle_id': 'com.apple.Terminal',
 	'ignore_old_messages': 'off',
 	'ignore_current_buffer_messages': 'off',
+	'channels': '',
 }
 
 for key, val in DEFAULT_OPTIONS.items():
@@ -55,8 +56,15 @@ def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
 	# passing `None` or `''` still plays the default sound so we pass a lambda instead
 	sound = weechat.config_get_plugin('sound_name') if weechat.config_get_plugin('sound') == 'on' else lambda:_
 	activate_bundle_id = weechat.config_get_plugin('activate_bundle_id')
-	if weechat.config_get_plugin('show_highlights') == 'on' and int(highlight):
-		channel = weechat.buffer_get_string(buffer, 'localvar_channel')
+
+	channel_whitelist = weechat.config_get_plugin('channels').split(',')
+	channel = weechat.buffer_get_string(buffer, 'localvar_channel')
+	if channel in channel_whitelist:
+		if weechat.config_get_plugin('show_message_text') == 'on':
+			Notifier.notify(message, title='%s %s' % (prefix, channel), sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
+		else:
+			Notifier.notify('In %s by %s' % (channel, prefix), title='Channel Activity', sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
+	elif weechat.config_get_plugin('show_highlights') == 'on' and int(highlight):
 		if weechat.config_get_plugin('show_message_text') == 'on':
 			Notifier.notify(message, title='%s %s' % (prefix, channel), sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
 		else:
