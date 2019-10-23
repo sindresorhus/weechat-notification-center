@@ -26,13 +26,14 @@ DEFAULT_OPTIONS = {
 	'ignore_old_messages': 'off',
 	'ignore_current_buffer_messages': 'off',
 	'channels': '',
+	'tags': '',
 }
 
 for key, val in DEFAULT_OPTIONS.items():
 	if not weechat.config_is_set_plugin(key):
 		weechat.config_set_plugin(key, val)
 
-weechat.hook_print('', 'irc_privmsg', '', 1, 'notify', '')
+weechat.hook_print('', 'irc_privmsg,' + weechat.config_get_plugin('tags'), '', 1, 'notify', '')
 
 def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
 	# ignore if it's yourself
@@ -69,7 +70,7 @@ def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
 			Notifier.notify(message, title='%s %s' % (prefix, channel), sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
 		else:
 			Notifier.notify('In %s by %s' % (channel, prefix), title='Highlighted Message', sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
-	elif weechat.config_get_plugin('show_private_message') == 'on' and 'notify_private' in tags:
+	elif weechat.config_get_plugin('show_private_message') == 'on' and 'irc_privmsg' in tags and 'notify_private' in tags:
 		if weechat.config_get_plugin('show_message_text') == 'on':
 			Notifier.notify(message, title='%s [private]' % prefix, sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
 		else:
