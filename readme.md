@@ -77,3 +77,18 @@ Default: `''`<br>
 Values: Comma-separated list of channel names
 
 Channels in this list will trigger a notification on every message received.
+
+### tags
+
+Default: `''`<br>
+Values: Comma-separated list of tags
+
+Additional [message tags](https://weechat.org/files/doc/stable/weechat_user.en.html#lines_tags) that can trigger notifications. This can be used in combination with [`weechat.look.highlight_tags`](https://weechat.org/files/doc/stable/weechat_user.en.html#option_weechat.look.highlight_tags) to generate custom notifications.
+
+For example, to get notifications when `<nick>` joins or parts `<server>`:
+
+```
+/notify add <nick> <server>
+/set weechat.look.highlight_tags "irc_notify_join,irc_notify_quit"
+/set plugins.var.notification_center.tags "irc_notify"
+```
