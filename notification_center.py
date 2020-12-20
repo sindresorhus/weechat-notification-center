@@ -58,12 +58,12 @@ def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
 	sound = weechat.config_get_plugin('sound_name') if weechat.config_get_plugin('sound') == 'on' else lambda:_
 	activate_bundle_id = weechat.config_get_plugin('activate_bundle_id')
 
-	channel_whitelist = []
+	channel_allow_list = []
 	if weechat.config_get_plugin('channels') != "":
-		channel_whitelist = weechat.config_get_plugin('channels').split(',')
+		channel_allow_list = weechat.config_get_plugin('channels').split(',')
 	channel = weechat.buffer_get_string(buffer, 'localvar_channel')
 
-	if channel in channel_whitelist:
+	if channel in channel_allow_list:
 		if weechat.config_get_plugin('show_message_text') == 'on':
 			Notifier.notify(message, title='%s %s' % (prefix, channel), sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
 		else:
