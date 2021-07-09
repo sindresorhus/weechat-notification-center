@@ -12,9 +12,14 @@ SCRIPT_AUTHOR = 'Sindre Sorhus <sindresorhus@gmail.com>'
 SCRIPT_VERSION = '1.5.1'
 SCRIPT_LICENSE = 'MIT'
 SCRIPT_DESC = 'Pass highlights and private messages to the macOS Notification Center'
-WEECHAT_ICON = os.path.expanduser('~/.weechat/weechat.png')
 
 weechat.register(SCRIPT_NAME, SCRIPT_AUTHOR, SCRIPT_VERSION, SCRIPT_LICENSE, SCRIPT_DESC, '', '')
+
+WEECHAT_VERSION = weechat.info_get('version_number', '') or 0
+if int(WEECHAT_VERSION) >= 0x03020000:
+	WEECHAT_ICON = os.path.join(weechat.info_get('weechat_config_dir', ''), 'weechat.png')
+else:
+	WEECHAT_ICON = os.path.join(weechat.info_get('weechat_dir', ''), 'weechat.png')
 
 DEFAULT_OPTIONS = {
 	'show_highlights': 'on',
