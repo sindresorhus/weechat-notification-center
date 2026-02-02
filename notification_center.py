@@ -70,17 +70,17 @@ def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
 
 	if channel in channel_allow_list:
 		if weechat.config_get_plugin('show_message_text') == 'on':
-			Notifier.notify(message, title='%s %s' % (prefix, channel), sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
+			Notifier.notify(message, title='%s %s' % (prefix, channel), group='weechat.%s' % channel, sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
 		else:
-			Notifier.notify('In %s by %s' % (channel, prefix), title='Channel Activity', sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
+			Notifier.notify('In %s by %s' % (channel, prefix), title='Channel Activity', group='weechat.%s' % channel, sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
 	elif weechat.config_get_plugin('show_highlights') == 'on' and int(highlight):
 		if weechat.config_get_plugin('show_message_text') == 'on':
-			Notifier.notify(message, title='%s %s' % (prefix, channel), sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
+			Notifier.notify(message, title='%s %s' % (prefix, channel), group='weechat.%s' % channel, sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
 		else:
-			Notifier.notify('In %s by %s' % (channel, prefix), title='Highlighted Message', sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
+			Notifier.notify('In %s by %s' % (channel, prefix), title='Highlighted Message', group='weechat.%s' % channel, sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
 	elif weechat.config_get_plugin('show_private_message') == 'on' and 'irc_privmsg' in tags and 'notify_private' in tags:
 		if weechat.config_get_plugin('show_message_text') == 'on':
-			Notifier.notify(message, title='%s [private]' % prefix, sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
+			Notifier.notify(message, title='%s [private]' % prefix, group='weechat.%s' % prefix, sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
 		else:
-			Notifier.notify('From %s' % prefix, title='Private Message', sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
+			Notifier.notify('From %s' % prefix, title='Private Message', group='weechat.%s' % prefix, sound=sound, appIcon=WEECHAT_ICON, activate=activate_bundle_id)
 	return weechat.WEECHAT_RC_OK
