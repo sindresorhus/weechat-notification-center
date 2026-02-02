@@ -9,7 +9,7 @@ from pync import Notifier
 
 SCRIPT_NAME = 'notification_center'
 SCRIPT_AUTHOR = 'Sindre Sorhus <sindresorhus@gmail.com>'
-SCRIPT_VERSION = '1.5.2'
+SCRIPT_VERSION = '1.6.0'
 SCRIPT_LICENSE = 'MIT'
 SCRIPT_DESC = 'Pass highlights and private messages to the macOS Notification Center'
 
