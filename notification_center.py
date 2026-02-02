@@ -22,6 +22,7 @@ else:
 	WEECHAT_ICON = os.path.join(weechat.info_get('weechat_dir', ''), 'weechat.png')
 
 DEFAULT_OPTIONS = {
+	'enabled': 'on',
 	'show_highlights': 'on',
 	'show_private_message': 'on',
 	'show_message_text': 'on',
@@ -41,6 +42,9 @@ for key, val in DEFAULT_OPTIONS.items():
 weechat.hook_print('', 'irc_privmsg,' + weechat.config_get_plugin('tags'), '', 1, 'notify', '')
 
 def notify(data, buffer, date, tags, displayed, highlight, prefix, message):
+	if weechat.config_get_plugin('enabled') != 'on':
+		return weechat.WEECHAT_RC_OK
+
 	# Ignore if it's yourself
 	own_nick = weechat.buffer_get_string(buffer, 'localvar_nick')
 	if prefix == own_nick or prefix == ('@%s' % own_nick):

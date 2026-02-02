@@ -21,6 +21,13 @@
 
 ## Options
 
+### enabled
+
+Default: `'on'`\
+Values: `'on'` `'off'`
+
+Temporarily disable all notifications.
+
 ### show_highlights
 
 Default: `'on'`\
